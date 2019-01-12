@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: David Dahlberg <dyn+code@dahlberg.cologne>
+ Copyright (C) 2019  Author: David Dahlberg <dyn+code@dahlberg.cologne>
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ Put file into ${PREFIX}/share/gtksourceview-3.0/language-specs/ or
+ ~/.local/share/gtksourceview-3.0/language-specs/.
+
+-->
+<language id="homematic" name="Homematic" version="2.0" _section="Script">
+  <metadata>
+    <property name="mimetypes">text/x-homematic-script</property>
+    <property name="globs">*.hm</property>
+    <property name="line-comment-start">!</property>
+  </metadata>
+
+  <styles>
+    <style id="script-env"  name="Script Environment Symbols" map-to="def:special-constant"/>
+    <style id="constant"  name="Script Environment Symbols" map-to="def:number"/>
+    <style id="boolean" name="Boolean value" map-to="def:boolean"/>
+    <style id="builtin" name="Built-in Function" map-to="def:builtin"/>
+    <style id="comment" name="Comment" map-to="def:comment"/>
+    <style id="string" name="String" map-to="def:string"/>
+    <style id="real" name="Real Value" map-to="def:floating-point"/>
+    <style id="integer" name="Integer" map-to="def:decimal"/>
+    <style id="function" name="Function" map-to="def:function"/>
+    <style id="operator" name="Operators" map-to="def:operator"/>
+    <style id="date-character"  name="Date Conversion" map-to="def:special-char"/>
+    <style id="escaped-character" name="Escaped Character" map-to="def:special-char"/>
+    <style id="included-file" name="Included File" map-to="def:string"/>
+    <style id="char" name="Character" map-to="def:character"/>
+    <style id="keyword" name="Keyword" map-to="def:keyword"/>
+    <style id="type" name="Data Type" map-to="def:type"/>
+    <style id="object-type" name="Object Type" map-to="def:constant"/>
+    <style id="object-id" name="Object ID" map-to="def:constant"/>
+    <style id="value-type" name="Value Type/Subtype" map-to="def:constant"/>
+  </styles>
+
+  <definitions>
+    <context id="boolean" style-ref="boolean">
+       <keyword>true</keyword>
+       <keyword>false</keyword>
+    </context>
+
+    <context id="comment" style-ref="comment">
+      <start>\!</start>
+      <end>$</end>
+        <include>
+          <context ref="def:in-comment"/>
+        </include>
+    </context>
+
+    <context id="constants" style-ref="constant">
+      <prefix>M_</prefix>
+      <keyword>E</keyword>
+      <keyword>LOG2E</keyword>
+      <keyword>LOG10E</keyword>
+      <keyword>LN2</keyword>
+      <keyword>LN10</keyword>
+      <keyword>PI</keyword>
+      <keyword>PI_2</keyword>
+      <keyword>PI_4</keyword>
+      <keyword>1_PI</keyword>
+      <keyword>2_PI</keyword>
+      <keyword>2_SQRTPI</keyword>
+      <keyword>SQRT2</keyword>
+      <keyword>SQRT1_2</keyword>
+    </context>
+
+    <context id="date" style-ref="date-character">
+      <match>%[%aAbBcCdDFhHIjmMnprStTuUVwWxXyYuZ]</match>
+    </context>
+
+    <context id="escape" style-ref="escaped-character">
+      <match>\\[\\"'tnr]</match>
+    </context>
+
+    <context id="builtins" style-ref="builtin">
+      <keyword>Call</keyword>
+      <keyword>dom</keyword>
+      <keyword>system\.Date</keyword>
+      <keyword>system\.IsVar</keyword>
+      <keyword>system\.GetVar</keyword>
+      <keyword>web.webGetValueFromList</keyword>
+      <keyword>web.webKeyFromStringTable</keyword>
+      <keyword>Write</keyword>
+      <keyword>WriteLine</keyword>
+    </context>
+
+    <context id="reals" style-ref="real">
+      <match>\b([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)\b</match>
+    </context>
+
+    <context id="integers" style-ref="integer">
+      <match>\b[0-9]+\b</match>
+    </context>
+
+    <context id="functions" style-ref="function">
+      <!--<prefix>\.</prefix>-->
+      <keyword>Abs</keyword>
+      <keyword>Acos</keyword>
+      <keyword>Address</keyword>
+      <keyword>AlDestMapDP</keyword>
+      <keyword>AlOccurrenceTime</keyword>
+      <keyword>AlState</keyword>
+      <keyword>AlTriggerDP</keyword>
+      <keyword>Asin</keyword>
+      <keyword>Atan</keyword>
+      <keyword>Cbrt</keyword>
+      <keyword>Ceil</keyword>
+      <keyword>Channel</keyword>
+      <keyword>Channels</keyword>
+      <keyword>ChnActive</keyword>
+      <keyword>ChnAESActive</keyword>
+      <keyword>ChnDirection</keyword>
+      <keyword>ChnGroupPartnerId</keyword>
+      <keyword>ChnRoom</keyword>
+      <keyword>ChnFunction</keyword>
+      <keyword>Contains</keyword>
+      <keyword>Cos</keyword>
+      <keyword>Cosh</keyword>
+      <keyword>Count</keyword>
+      <keyword>Day</keyword>
+      <keyword>Device</keyword>
+      <keyword>DPByHssDP</keyword>
+      <keyword>DPInfo</keyword>
+      <keyword>DPs</keyword>
+      <keyword>EndsWith</keyword>
+      <keyword>EnumIDs</keyword>
+      <keyword>EnumUsedIDs</keyword>
+      <keyword>EnumUsedNames</keyword>
+      <keyword>Exp</keyword>
+      <keyword>Exp10</keyword>
+      <keyword>Exp2</keyword>
+      <keyword>Expm1</keyword>
+      <keyword>Find</keyword>
+      <keyword>Floor</keyword>
+      <keyword>Format</keyword>
+      <keyword>Get</keyword>
+      <keyword>GetAt</keyword>
+      <keyword>GetObject</keyword>
+      <keyword>Hour</keyword>
+      <keyword>HSSID</keyword>
+      <keyword>HssType</keyword>
+      <keyword>ID</keyword>
+      <keyword>Interface</keyword>
+      <keyword>IsDST</keyword>
+      <keyword>IsLocalTime</keyword>
+      <keyword>IsTypeOf</keyword>
+      <keyword>LastValue</keyword>
+      <keyword>LastTriggerID</keyword>
+      <keyword>Length</keyword>
+      <keyword>Log</keyword>
+      <keyword>Log10</keyword>
+      <keyword>Log2</keyword>
+      <keyword>Log1p</keyword>
+      <keyword>LTrim</keyword>
+      <keyword>Max</keyword>
+      <keyword>Min</keyword>
+      <keyword>Minute</keyword>
+      <keyword>Mod</keyword>
+      <keyword>Month</keyword>
+      <keyword>Name</keyword>
+      <keyword>Operations</keyword>
+      <keyword>Pow</keyword>
+      <keyword>Random</keyword>
+      <keyword>Replace</keyword>
+      <keyword>Round</keyword>
+      <keyword>RTrim</keyword>
+      <keyword>Second</keyword>
+      <keyword>Sin</keyword>
+      <keyword>Sinh</keyword>
+      <keyword>Split</keyword>
+      <keyword>Sqrt</keyword>
+      <keyword>Srandom</keyword>
+      <keyword>StartsWith</keyword>
+      <keyword>State</keyword>
+      <keyword>StrValueByIndex</keyword>
+      <keyword>Substr</keyword>
+      <keyword>Tan</keyword>
+      <keyword>Tanh</keyword>
+      <keyword>Timestamp</keyword>
+      <keyword>ToFloat</keyword>
+      <keyword>ToInteger</keyword>
+      <keyword>ToLatin</keyword>
+      <keyword>ToLower</keyword>
+      <keyword>ToString</keyword>
+      <keyword>ToTime</keyword>
+      <keyword>ToUpper</keyword>
+      <keyword>ToUTF8</keyword>
+      <keyword>Trim</keyword>
+      <keyword>Trunc</keyword>
+      <keyword>Type</keyword>
+      <keyword>TypeName</keyword>
+      <keyword>UriDecode</keyword>
+      <keyword>UriEncode</keyword>
+      <keyword>Value</keyword>
+      <keyword>ValueList</keyword>
+      <keyword>ValueName0</keyword>
+      <keyword>ValueName1</keyword>
+      <keyword>ValueSubType</keyword>
+      <keyword>ValueType</keyword>
+      <keyword>Variable</keyword>
+      <keyword>VarType</keyword>
+      <keyword>Week</keyword>
+      <keyword>Weekday</keyword>
+      <keyword>Year</keyword>
+      <keyword>Yearday</keyword>
+    </context>
+
+    <context id="single-quoted-string" end-at-line-end="true" style-ref="string">
+      <start>'</start>
+      <end>'</end>
+      <include>
+        <context ref="escape"/>
+      </include>
+    </context>
+
+    <context id="double-quoted-string" end-at-line-end="true" style-ref="string">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <context ref="escape"/>
+      </include>
+    </context>
+
+    <context id="at-quoted-date" end-at-line-end="true" style-ref="string">
+      <start>@</start>
+      <end>@</end>
+      <include>
+        <context ref="escape"/>
+        <context ref="date"/>
+      </include>
+    </context>
+
+    <context id="string">
+      <include>
+        <context ref="single-quoted-string"/>
+        <context ref="double-quoted-string"/>
+        <context ref="at-quoted-date"/>
+      </include>
+    </context>
+
+    <context id="script-env" style-ref="script-env">
+      <prefix>\$</prefix>
+      <suffix>\$</suffix>
+      <keyword>this</keyword>
+      <keyword>src</keyword>
+    </context>
+
+
+    <define-regex id="operator" extended="true">
+      = | \+ | \- | \* | / | == | &lt;&gt; | \!= | &lt; | &lt;= |
+      &gt; | &gt;= | &amp;&amp; | \|\| | &amp; | \| | \! | \# | \. | %
+    </define-regex>
+
+    <context id="operators" style-ref="operator">
+      <match>\%{operator}</match>
+    </context>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>elseif</keyword>
+      <keyword>foreach</keyword>
+      <keyword>if</keyword>
+      <keyword>quit</keyword>
+      <keyword>then</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="types" style-ref="type">
+      <keyword>boolean</keyword>
+      <keyword>idarray</keyword>
+      <keyword>integer</keyword>
+      <keyword>object</keyword>
+      <keyword>real</keyword>
+      <keyword>string</keyword>
+      <keyword>time</keyword>
+      <keyword>var</keyword>
+    </context>
+
+    <context id="object-types" style-ref="object-type">
+      <prefix>OT_</prefix>
+      <keyword>NONE</keyword>
+      <keyword>OBJECT</keyword>
+      <keyword>ENUM</keyword>
+      <keyword>ROOT</keyword>
+      <keyword>DOM</keyword>
+      <keyword>DEVICE</keyword>
+      <keyword>CHANNEL</keyword>
+      <keyword>CHANNELS</keyword>
+      <keyword>DP</keyword>
+      <keyword>DPS</keyword>
+      <keyword>TIMERDP</keyword>
+      <keyword>CALENDARDP</keyword>
+      <keyword>MAPDP</keyword>
+      <keyword>VARDP</keyword>
+      <keyword>COMMDP</keyword>
+      <keyword>ALARMDP</keyword>
+      <keyword>IPDP</keyword>
+      <keyword>UPNPDP</keyword>
+      <keyword>KNXDP</keyword>
+      <keyword>OCEANDP</keyword>
+      <keyword>USER</keyword>
+      <keyword>USERS</keyword>
+      <keyword>RFDP</keyword>
+      <keyword>IRDP</keyword>
+      <keyword>HSSDP</keyword>
+      <keyword>SCHEDULER</keyword>
+      <keyword>USERPAGE</keyword>
+      <keyword>INTERFACE</keyword>
+      <keyword>PROGRAM</keyword>
+      <keyword>HISTORYDP</keyword>
+      <keyword>SMTPSRV</keyword>
+      <keyword>POPCLIENT</keyword>
+      <keyword>CONDITION</keyword>
+      <keyword>MESSAGE</keyword>
+      <keyword>UIDATA</keyword>
+      <keyword>FAVORITE</keyword>
+      <keyword>ALL</keyword>
+    </context>
+
+    <context id="object-ids" style-ref="object-id">
+      <prefix>ID_</prefix>
+      <keyword>DOM</keyword>
+      <keyword>ROOT</keyword>
+      <keyword>DEVICES</keyword>
+      <keyword>CHANNELS</keyword>
+      <keyword>DATAPOINTS</keyword>
+      <keyword>STRUCTURE</keyword>
+      <keyword>VALUE_EVENTING</keyword>
+      <keyword>EVENTING</keyword>
+      <keyword>RUNTIMECONFIG</keyword>
+      <keyword>ROOMS</keyword>
+      <keyword>FUNCTIONS</keyword>
+      <keyword>FAVORITES</keyword>
+      <keyword>LINKS</keyword>
+      <keyword>SCENES</keyword>
+      <keyword>CIRCUITS</keyword>
+      <keyword>CONTACTS</keyword>
+      <keyword>ALARMS</keyword>
+      <keyword>ALARM_MAPS</keyword>
+      <keyword>UPNP</keyword>
+      <keyword>ENOCEAN</keyword>
+      <keyword>ENOCEANLASTREC</keyword>
+      <keyword>PRESENT</keyword>
+      <keyword>USERS</keyword>
+      <keyword>USERPAGES</keyword>
+      <keyword>INTERFACES</keyword>
+      <keyword>GW_DEVICE</keyword>
+      <keyword>GW_CHANNEL</keyword>
+      <keyword>GW_DATAPOINT</keyword>
+      <keyword>PROGRAMS</keyword>
+      <keyword>HISTORYDPS</keyword>
+      <keyword>PRESENCE_SIMULATION</keyword>
+      <keyword>VIEW_OBJECTS</keyword>
+      <keyword>MESSAGES</keyword>
+      <keyword>UID_DATAS</keyword>
+      <keyword>SYSTEM_VARIABLES</keyword>
+      <keyword>SERVICES</keyword>
+      <keyword>RULES</keyword>
+      <keyword>CALENDARDPS</keyword>
+      <keyword>ERROR</keyword>
+    </context>
+
+    <context id="ivts" style-ref="value-type">
+      <prefix>ivt</prefix>
+      <keyword>Binary</keyword>
+      <keyword>Float</keyword>
+      <keyword>Integer</keyword>
+      <keyword>String</keyword>
+    </context>
+
+    <context id="ists" style-ref="value-type">
+      <prefix>ist</prefix>
+      <keyword>Present</keyword>
+      <keyword>Alarm</keyword>
+      <keyword>Generic</keyword>
+      <keyword>Bool</keyword>
+      <keyword>Enum</keyword>
+      <keyword>Char8859</keyword>
+    </context>
+
+    <context id="homematic" class="no-spell-check">
+      <include>
+        <context ref="boolean"/>
+        <context ref="builtins"/>
+        <context ref="comment"/>
+        <context ref="constants"/>
+        <context ref="escape"/>
+        <context ref="date"/>
+        <context ref="functions"/>
+        <context ref="integers"/>
+        <context ref="ists"/>
+        <context ref="ivts"/>
+        <context ref="keywords"/>
+        <context ref="object-ids"/>
+        <context ref="object-types"/>
+        <context ref="operators"/>
+        <context ref="reals"/>
+        <context ref="script-env"/>
+        <context ref="string"/>
+        <context ref="types"/>
+      </include>
+    </context>
+
+  </definitions>
+</language>
